@@ -689,7 +689,7 @@ function Console({ adminToken, onLogout }: { adminToken: string; onLogout: () =>
             {primaryStatusAction.label}
           </button>
         )}
-        {activeTab === "activity" && <button className="outline-button" disabled={!activity} onClick={() => setShowCreate((v) => !v)}>
+        {activeTab === "activity" && <button className="outline-button" onClick={() => setShowCreate((v) => !v)}>
           {showCreate ? "收起" : "创建活动"}
         </button>}
         {activeTab === "activity" && <button className="reject-button" disabled={!activity} onClick={handleEndClick}>
