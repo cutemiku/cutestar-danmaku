@@ -48,7 +48,9 @@ public sealed class Reconnector : IDisposable
                     return;
                 }
                 _attempt++;
-                var delay = Math.Min(30, (int)Math.Pow(2, _attempt));
+                // 退避从 5s 起步、封顶 60s：降低握手频率，规避中间层（ESA/防火墙）对高频
+                // WS 握手的临时封禁；长退避间隙由"马上重连"菜单与断线检测兜底
+                var delay = Math.Min(60, 5 * (int)Math.Pow(2, _attempt - 1));
                 Debug.WriteLine($"[Reconnector] Retry {_attempt} in {delay}s: {ex.Message}");
                 ScreenLog.Write($"[Reconnector] 重连 {_attempt} 次，{delay}s 后重试: {ex.Message}");
                 _onStatus?.Invoke(false);

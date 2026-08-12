@@ -36,6 +36,14 @@ public sealed class WsClient : IDisposable
         _lastSequence = InitialSequence;
         _cts = CancellationTokenSource.CreateLinkedTokenSource(ct);
         _ws = new ClientWebSocket();
+        // 宝塔 WAF 等防护会拦截无 Origin / 非浏览器 UA 的 WebSocket 握手（表现为 403），
+        // 补齐浏览器特征请求头以通过防护；服务端不校验 Origin，不影响鉴权。
+        _ws.Options.SetRequestHeader(
+            "Origin",
+            serverUrl.Replace("ws://", "http://").Replace("wss://", "https://"));
+        _ws.Options.SetRequestHeader(
+            "User-Agent",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36");
 
         var wsUrl = serverUrl.Replace("http://", "ws://").Replace("https://", "wss://")
             + $"/api/v1/activities/{activityId}/events?last_sequence={_lastSequence}";

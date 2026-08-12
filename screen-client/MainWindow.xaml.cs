@@ -239,6 +239,8 @@ public partial class MainWindow : Window
             _renderer?.SetConfig(_config);
         }
 
+        // 每次（含重连）都用最新持久化序列号连接，避免把已确认历史当补偿重放
+        _ws.InitialSequence = _config.LastSequence;
         await _ws.ConnectAsync(_config.ServerUrl, validation.ActivityId);
     }
 
@@ -371,7 +373,10 @@ public partial class MainWindow : Window
     private void ReconnectNow()
     {
         ToastWindow.Show("正在重新连接…", 2500);
-        _reconnector.Start();
+        // 手动重连前先停掉旧循环并等待旧连接释放，避免新旧握手挤在同 1 秒内
+        // （中间层常对瞬时多握手做临时封禁），再由 Reconnector 立即发起新连接
+        _reconnector.Stop();
+        _ = Task.Delay(1000).ContinueWith(_ => Dispatcher.BeginInvoke(_reconnector.Start));
     }
 
     /// <summary>
@@ -441,14 +446,17 @@ public partial class MainWindow : Window
             var nickname = payload.TryGetProperty("nickname", out var nn) ? nn.GetString() ?? "" : "";
             var content = payload.GetProperty("content").GetString() ?? "";
             var color = payload.TryGetProperty("color", out var c) ? c.GetString() ?? "#FFFFFF" : "#FFFFFF";
+            var isReplay = evt.TryGetProperty("replay", out var replay) && replay.GetBoolean();
+            ScreenLog.Write($"[Overlay] 收到弹幕{(isReplay ? "(历史补偿)" : "")}: {content}");
             // 断线补偿的历史弹幕：错峰随机延时展示，避免一股脑刷屏；实时弹幕立即上屏
-            if (evt.TryGetProperty("replay", out var replay) && replay.GetBoolean())
+            if (isReplay)
                 QueueReplayDanmaku(nickname, content, color);
             else
                 _renderer.Push(nickname, content, color);
         }
         else if (type == "screen.clear_requested")
         {
+            ScreenLog.Write("[Overlay] 收到清屏指令");
             Dispatcher.BeginInvoke(_renderer.Clear);
         }
         else if (type == "activity.status_changed" && evt.TryGetProperty("payload", out var statusPayload))
