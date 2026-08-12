@@ -32,9 +32,6 @@ obj/
 .mimocode/
 .playwright-cli/
 
-# ── 微信小程序个人配置 ──
-weixin-miniprg/project.private.config.json
-
 # ── 操作系统 ──
 .DS_Store
 Thumbs.db
