@@ -1,0 +1,30 @@
+# 构建上下文排除项（deploy-same-origin all-in-one 镜像使用仓库根作为 context）
+
+# 版本控制与工具链
+.git
+.gitignore
+.mimocode
+.playwright-cli
+
+# 依赖与构建产物（Dockerfile 内部自行构建 web/dist）
+**/node_modules
+**/dist
+**/*.tsbuildinfo
+
+# Python 缓存与虚拟环境
+**/__pycache__
+**/*.pyc
+.pytest_cache
+.venv
+venv
+
+# .NET 构建产物
+screen-client/bin
+screen-client/obj
+
+# 本地数据与密钥
+server/.env
+server/*.db
+server/_*.py
+server/_*.txt
+server/_*.log

@@ -1,29 +1,20 @@
-# 星萌弹幕姬 同源部署 — 一键启动
-# 架构：nginx(80) 服务静态前端 + 反代 /api → server(8000)
-# 参与者 / 运营控制台 / 大屏均访问同一个域名，无跨域问题。
+# 星萌弹幕姬 all-in-one 容器 — 一键启动
+# 单容器内同时运行 nginx（静态前端 + /api 反代）与 uvicorn（FastAPI 后端）
+# 参与者 / 运营控制台（/）、轻量发送端（/m/）同源访问，无跨域问题。
 # 首次部署：复制本目录 .env.example（或参考 server/.env.example）填写
 # CUTESTAR_JWT_SECRET / CUTESTAR_ADMIN_PASSWORD 后启动；缺失将启动失败。
 
 services:
-  nginx:
-    image: nginx:alpine
+  cutestar:
+    build:
+      context: ..          # 仓库根：Dockerfile 需要 web/、server/、mobile-sender/
+      dockerfile: deploy-same-origin/Dockerfile
     ports:
       - "${HTTP_PORT:-8080}:80"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./public:/usr/share/nginx/html:ro
-    depends_on:
-      - server
-    restart: unless-stopped
-
-  server:
-    build:
-      context: ../server
-      dockerfile: Dockerfile
     environment:
       CUTESTAR_ENV: production
       # 轻量场景用 SQLite（数据挂载到卷）；正式活动建议改为 PostgreSQL
-      CUTESTAR_DATABASE_URL: sqlite+aiosqlite:///./data/dev.db
+      CUTESTAR_DATABASE_URL: sqlite+aiosqlite:////app/data/cutestar.db
       CUTESTAR_REDIS_URL: ""
       # 同源部署后浏览器不再跨域，白名单可留空
       CUTESTAR_CORS_ORIGINS: ""
@@ -31,10 +22,10 @@ services:
       CUTESTAR_ADMIN_USERNAME: ${CUTESTAR_ADMIN_USERNAME:-admin}
       CUTESTAR_ADMIN_PASSWORD: ${CUTESTAR_ADMIN_PASSWORD:?请在 .env 中设置 CUTESTAR_ADMIN_PASSWORD（勿使用默认弱口令）}
       CUTESTAR_ADMIN_ENTRY_PATH: ${CUTESTAR_ADMIN_ENTRY_PATH:-ops-console-7f3a}
-      WEB_CONCURRENCY: "2"
+      WEB_CONCURRENCY: "1"
     volumes:
-      - server-data:/app/data
+      - cutestar-data:/app/data
     restart: unless-stopped
 
 volumes:
-  server-data: {}
+  cutestar-data: {}

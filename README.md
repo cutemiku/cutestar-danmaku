@@ -44,7 +44,7 @@
 - `server/`：Python FastAPI 模块化单体服务（活动、审核、弹幕、大屏密钥、审计）
 - `screen-client/`：.NET 8 WPF Windows 大屏客户端（软件渲染 + GPU 渲染双实现）
 - `mobile-sender/`：无构建的移动端发送页（单页应用，可直接部署）
-- `deploy-same-origin/`：nginx + 后端的同源一键部署（含静态前端与 WS 反代）
+- `deploy-same-origin/`：all-in-one 容器（React 前端 + mobile-sender + nginx 反代 + FastAPI 后端单容器运行）
 - `infra/`：容器化本地开发与云端部署模板（PostgreSQL + Redis + 迁移）
 - `docs/`：产品、API/事件与部署文档
 
@@ -94,7 +94,7 @@ powershell -ExecutionPolicy Bypass -File start-dev.ps1
 ## 部署
 
 - 推荐拓扑：云端反向代理（Caddy / nginx）终止 HTTPS/WSS，服务端连接 PostgreSQL、Redis，大屏客户端仅主动出网
-- 轻量场景：`deploy-same-origin/` 提供 nginx 同源部署（静态前端 + `/api` 与 WebSocket 反代），详见 `docs/deployment-runbook.md`
+- 轻量场景：`deploy-same-origin/` 提供 all-in-one 单容器（React 前端 `/` + 轻量发送端 `/m/` + `/api` 与 WebSocket 反代 + FastAPI 后端），详见 `docs/deployment-runbook.md`
 - 生产安全基线（TLS、CSP、响应头、密钥必填）见 `docs/deployment-runbook.md`
 
 ## 许可证
