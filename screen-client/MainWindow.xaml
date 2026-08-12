@@ -6,6 +6,6 @@
         Background="Transparent"
         Topmost="True"
         ShowInTaskbar="False"
-        Title="Cutestar Overlay">
+        Title="星萌弹幕姬 大屏">
   <Canvas x:Name="DanmakuCanvas" ClipToBounds="True" />
 </Window>

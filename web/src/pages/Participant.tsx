@@ -217,7 +217,7 @@ export default function Participant() {
       </div>
       <div className="participant-foot">
         <span>活动码 {(code ?? "").toUpperCase()}</span>
-        <span>由 cutestar 提供互动</span>
+        <span>由 星萌弹幕姬 提供互动</span>
       </div>
     </section>
   );

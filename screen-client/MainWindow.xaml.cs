@@ -74,7 +74,7 @@ public partial class MainWindow : Window
         _trayIcon = new Forms.NotifyIcon
         {
             Icon = CreateTrayIcon(),
-            Text = "Cutestar 弹幕大屏",
+            Text = "星萌弹幕姬 大屏",
             Visible = true,
             ContextMenuStrip = menu,
         };
@@ -118,7 +118,7 @@ public partial class MainWindow : Window
         var monitorName = _config.MonitorIndex < screens.Length
             ? $"显示器 {_config.MonitorIndex + 1}" : "默认显示器";
         ScreenLog.Write($"大屏启动 · {monitorName} · 服务 {_config.ServerUrl} · 活动 {_config.ActivityCode}");
-        ToastWindow.Show($"Cutestar 弹幕大屏已启动 · {monitorName}", 3500);
+        ToastWindow.Show($"星萌弹幕姬 大屏已启动 · {monitorName}", 3500);
 
         // 创建渲染器并启动渲染循环
         _renderer = RendererFactory.Create(_config, DanmakuCanvas,
@@ -169,8 +169,8 @@ public partial class MainWindow : Window
             Dispatcher.BeginInvoke(() =>
             {
                 _trayIcon.Text = connected
-                    ? "Cutestar 弹幕大屏 - 已连接"
-                    : "Cutestar 弹幕大屏 - 断线重连中…";
+                    ? "星萌弹幕姬 大屏 - 已连接"
+                    : "星萌弹幕姬 大屏 - 断线重连中…";
                 // 已建立连接后掉线（服务器重启 / uvicorn --reload / 网络抖动）：
                 // 右上角轻提示 + 立即重连；初次连接失败由 Reconnector 指数退避处理，避免空转
                 if (dropped)

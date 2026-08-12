@@ -1,4 +1,4 @@
-// API 封装 — 与 Cutestar 后端兼容
+// API 封装 — 与星萌弹幕姬后端兼容
 // API 地址解析优先级：
 //   1. URL 查询参数 ?api=https://api.example.com （现场部署时推荐，避免硬编码本地地址）
 //   2. 全局变量 window.CUTESTAR_API_BASE（静态部署时在 index.html 里配置）

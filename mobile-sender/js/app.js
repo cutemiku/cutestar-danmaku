@@ -1,4 +1,4 @@
-// Cutestar 移动端发送端 — 单页应用
+// 星萌弹幕姬 移动端发送端 — 单页应用
 // 页面状态: 'entry' | 'join' | 'sender'
 
 const FINGERPRINT_KEY = 'cutestar_device_fingerprint';
@@ -100,7 +100,7 @@ function renderEntry() {
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
           </svg>
         </div>
-        <h1 class="brand-title">弹幕互动</h1>
+        <h1 class="brand-title">星萌弹幕姬</h1>
         <p class="brand-sub">输入活动码，加入现场</p>
       </div>
       <div class="entry-form">
@@ -126,7 +126,7 @@ function renderEntry() {
         </button>
       </div>
       <div class="entry-footer">
-        <span>由 cutestar 提供互动支持</span>
+        <span>由 星萌弹幕姬 提供互动支持</span>
       </div>
     </div>
   `;

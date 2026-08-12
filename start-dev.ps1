@@ -1,4 +1,4 @@
-﻿# start-dev.ps1 — Cutestar 本地一键启动脚本
+# start-dev.ps1 — 星萌弹幕姬 本地一键启动脚本
 # 用法：
 #   powershell -ExecutionPolicy Bypass -File start-dev.ps1          # 正常启动
 #   powershell -ExecutionPolicy Bypass -File start-dev.ps1 -CheckOnly  # 只做环境检查，不启动
@@ -15,7 +15,7 @@ $server = Join-Path $root "server"
 $web = Join-Path $root "web"
 
 Write-Host ""
-Write-Host "=== Cutestar 本地开发环境检查 ===" -ForegroundColor Cyan
+Write-Host "=== 星萌弹幕姬 本地开发环境检查 ===" -ForegroundColor Cyan
 
 # ── 1. 基础工具检查 ──
 $py = Get-Command python -ErrorAction SilentlyContinue
@@ -111,13 +111,13 @@ if ($CheckOnly) {
 Start-Process powershell -ArgumentList @(
     "-NoExit",
     "-Command",
-    "`$Host.UI.RawUI.WindowTitle='Cutestar 后端 (8000)'; Set-Location '$server'; uvicorn app.main:app --reload --port 8000"
+    "`$Host.UI.RawUI.WindowTitle='星萌弹幕姬 后端 (8000)'; Set-Location '$server'; uvicorn app.main:app --reload --port 8000"
 )
 
 Start-Process powershell -ArgumentList @(
     "-NoExit",
     "-Command",
-    "`$Host.UI.RawUI.WindowTitle='Cutestar 前端 (5173)'; Set-Location '$web'; npm run dev"
+    "`$Host.UI.RawUI.WindowTitle='星萌弹幕姬 前端 (5173)'; Set-Location '$web'; npm run dev"
 )
 
 Start-Sleep -Seconds 2

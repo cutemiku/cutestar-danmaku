@@ -1,7 +1,7 @@
 <Window x:Class="Cutestar.Screen.LogViewerWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Cutestar 大屏 - 运行状态与日志"
+        Title="星萌弹幕姬 大屏 - 运行状态与日志"
         Width="640" Height="420"
         WindowStartupLocation="CenterScreen"
         Background="#1C2518" Foreground="#F4F6F0">

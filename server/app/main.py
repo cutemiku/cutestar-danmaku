@@ -65,7 +65,7 @@ async def lifespan(_app: FastAPI):
     await bus.aclose()
 
 
-app = FastAPI(title="Cutestar Danmaku API", version="0.1.0", lifespan=lifespan)
+app = FastAPI(title="星萌弹幕姬 API (Cutestar Danmaku)", version="0.1.0", lifespan=lifespan)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origins_list,

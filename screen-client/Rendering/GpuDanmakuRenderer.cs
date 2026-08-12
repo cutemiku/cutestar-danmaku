@@ -158,7 +158,7 @@ public sealed class GpuDanmakuRenderer : IDanmakuRenderer
 
         const int exStyle = WS_EX_TOPMOST | WS_EX_TRANSPARENT | WS_EX_LAYERED
             | WS_EX_NOACTIVATE | WS_EX_NOREDIRECTIONBITMAP | WS_EX_TOOLWINDOW;
-        _hwnd = CreateWindowEx(exStyle, "CutestarGpuOverlay", "Cutestar GPU Overlay",
+        _hwnd = CreateWindowEx(exStyle, "CutestarGpuOverlay", "星萌弹幕姬 GPU Overlay",
             WS_POPUP, area.X, area.Y, area.Width, area.Height,
             IntPtr.Zero, IntPtr.Zero, wc.hInstance, IntPtr.Zero);
         if (_hwnd == IntPtr.Zero)

@@ -28,7 +28,7 @@ function App() {
         <header className="topbar">
           <Link to="/" className="brand-lockup">
             <span className="brand-mark">C</span>
-            <span>cutestar</span>
+            <span>星萌弹幕姬</span>
           </Link>
         </header>
         <Routes>

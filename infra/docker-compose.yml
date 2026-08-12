@@ -7,7 +7,7 @@ services:
       - "8000:8000"
     environment:
       CUTESTAR_ENV: production
-      CUTESTAR_DATABASE_URL: postgresql+asyncpg://cutestar:cutestar@postgres:5432/cutestar
+      CUTESTAR_DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-cutestar}:${POSTGRES_PASSWORD:?请在 .env 中设置 POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-cutestar}
       CUTESTAR_REDIS_URL: redis://redis:6379/0
       CUTESTAR_CORS_ORIGINS: ${CUTESTAR_CORS_ORIGINS:?请在 .env 中设置 CUTESTAR_CORS_ORIGINS}
       CUTESTAR_JWT_SECRET: ${CUTESTAR_JWT_SECRET:?请在 .env 中设置 CUTESTAR_JWT_SECRET}
@@ -24,13 +24,13 @@ services:
   postgres:
     image: postgres:16-alpine
     environment:
-      POSTGRES_USER: cutestar
-      POSTGRES_PASSWORD: cutestar
-      POSTGRES_DB: cutestar
+      POSTGRES_USER: ${POSTGRES_USER:-cutestar}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?请在 .env 中设置 POSTGRES_PASSWORD（勿使用默认弱口令）}
+      POSTGRES_DB: ${POSTGRES_DB:-cutestar}
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U cutestar -d cutestar"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-cutestar} -d ${POSTGRES_DB:-cutestar}"]
       interval: 5s
       timeout: 3s
       retries: 10

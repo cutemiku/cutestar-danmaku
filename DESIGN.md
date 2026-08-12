@@ -1,4 +1,4 @@
-# Cutestar Danmaku Design System
+# 星萌弹幕姬（Cutestar）Design System
 
 ## Objective
 
@@ -6,7 +6,7 @@
 
 ## Product Context
 
-Cutestar 是纯互动型活动弹幕平台，不包含霸屏、礼物、付费曝光或商业化装饰。主要场景是会议、发布会、年会和婚礼。产品由移动参与者 Web、桌面运营控制台和 Windows WPF 大屏组成。
+星萌弹幕姬（Cutestar）是纯互动型活动弹幕平台，不包含霸屏、礼物、付费曝光或商业化装饰。主要场景是会议、发布会、年会和婚礼。产品由移动参与者 Web、桌面运营控制台和 Windows WPF 大屏组成。
 
 ## Visual Foundations
 
