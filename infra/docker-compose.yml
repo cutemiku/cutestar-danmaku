@@ -1,0 +1,47 @@
+services:
+  server:
+    build:
+      context: ../server
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      CUTESTAR_ENV: production
+      CUTESTAR_DATABASE_URL: postgresql+asyncpg://cutestar:cutestar@postgres:5432/cutestar
+      CUTESTAR_REDIS_URL: redis://redis:6379/0
+      CUTESTAR_CORS_ORIGINS: ${CUTESTAR_CORS_ORIGINS:?请在 .env 中设置 CUTESTAR_CORS_ORIGINS}
+      CUTESTAR_JWT_SECRET: ${CUTESTAR_JWT_SECRET:?请在 .env 中设置 CUTESTAR_JWT_SECRET}
+      CUTESTAR_ADMIN_USERNAME: ${CUTESTAR_ADMIN_USERNAME:-admin}
+      CUTESTAR_ADMIN_PASSWORD: ${CUTESTAR_ADMIN_PASSWORD:?请在 .env 中设置 CUTESTAR_ADMIN_PASSWORD}
+      CUTESTAR_ADMIN_ENTRY_PATH: ${CUTESTAR_ADMIN_ENTRY_PATH:?请在 .env 中设置 CUTESTAR_ADMIN_ENTRY_PATH}
+      WEB_CONCURRENCY: "2"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: cutestar
+      POSTGRES_PASSWORD: cutestar
+      POSTGRES_DB: cutestar
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cutestar -d cutestar"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  pgdata: {}

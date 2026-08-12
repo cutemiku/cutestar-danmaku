@@ -1,0 +1,11 @@
+<Window x:Class="Cutestar.Screen.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Topmost="True"
+        ShowInTaskbar="False"
+        Title="Cutestar Overlay">
+  <Canvas x:Name="DanmakuCanvas" ClipToBounds="True" />
+</Window>

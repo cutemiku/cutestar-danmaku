@@ -1,0 +1,40 @@
+# ── 密钥与本地配置 ──
+server/.env
+
+# ── 数据库（本地开发数据不入库） ──
+*.db
+*.sqlite
+*.sqlite3
+
+# ── 开发调试残留（server 根目录下划线前缀的临时脚本/输出） ──
+/server/_*.py
+/server/_*.txt
+/server/_*.log
+
+# ── Python ──
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+
+# ── Node / 前端 ──
+node_modules/
+dist/
+*.tsbuildinfo
+
+# ── .NET ──
+bin/
+obj/
+
+# ── 工具链本地产物 ──
+.mimocode/
+.playwright-cli/
+
+# ── 微信小程序个人配置 ──
+weixin-miniprg/project.private.config.json
+
+# ── 操作系统 ──
+.DS_Store
+Thumbs.db
